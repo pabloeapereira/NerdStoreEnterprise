@@ -55,7 +55,7 @@ namespace NSE.Identidade.API.Controllers
             var result = await _signInManager.PasswordSignInAsync(usuarioLogin.Email, usuarioLogin.Senha,
                 false, true);
 
-            if (result.Succeeded)
+                if (result.Succeeded)
             {
                 return CustomResponse(await GerarJwtAsync(usuarioLogin.Email));
             }

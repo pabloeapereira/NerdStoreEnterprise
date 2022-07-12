@@ -8,7 +8,31 @@
     }
   },
   "profiles": {
-    "NSE.WebApp.MVC": {
+    "IIS Development": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "IIS Staging": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Staging"
+      }
+    },
+    "IIS Production": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      }
+    },
+    "Selfhosting - Development": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
@@ -16,13 +40,6 @@
       },
       "applicationUrl": "https://localhost:7223;http://localhost:5223",
       "dotnetRunMessages": true
-    },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
     },
     "Docker": {
       "commandName": "Docker",

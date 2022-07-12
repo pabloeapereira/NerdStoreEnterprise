@@ -1,32 +1,37 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NSE.WebApp.MVC.Models;
-using System.Diagnostics;
 
 namespace NSE.WebApp.MVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        public IActionResult Index() => View();
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+        public IActionResult Privacy() => View();
 
-        public IActionResult Index()
+        [Route("erro/{id:length(3,3)}")]
+        public IActionResult Error(int id)
         {
-            return View();
-        }
+            var modelError = new ErrorViewModel { Code = id };
+            switch (id)
+            {
+                case 500:
+                    modelError.Message = "Ocorreu um erro! Tente novamente mais tarde ou contate nosso suporte.";
+                    modelError.Title = "Ocorreu um erro!";
+                    break;
+                case 404:
+                    modelError.Message = "A ágina que está procurando não existe! <br/>Em caso de dúvidas entre em contato com o nosso suporte.";
+                    modelError.Title = "Ops! Página não encontrada";
+                    break;
+                case 403:
+                    modelError.Message = "Você não tem permissão para fazer isto.";
+                    modelError.Title = "Acesso Negado";
+                    break;
+                default:
+                    return NotFound();
+            };
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(modelError);
         }
     }
 }
