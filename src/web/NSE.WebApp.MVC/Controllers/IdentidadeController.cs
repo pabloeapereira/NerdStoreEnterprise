@@ -31,7 +31,7 @@ namespace NSE.WebApp.MVC.Controllers
 
             var resposta = await _autenticacaoService.RegistroAsync(usuarioRegistro);
 
-            if (ResponsePossuiErros(resposta.ResponseResult)) return View(usuarioRegistro);
+            if (ResponsePossuiErros(resposta?.ResponseResult)) return View(usuarioRegistro);
 
             await RealizarLoginAsync(resposta);
 
@@ -39,7 +39,7 @@ namespace NSE.WebApp.MVC.Controllers
         }
 
         [HttpGet("login")]
-        public IActionResult Login(string returnUrl = null)
+        public IActionResult Login(string? returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
             return View();
