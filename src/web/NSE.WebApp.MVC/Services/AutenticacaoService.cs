@@ -6,13 +6,9 @@ namespace NSE.WebApp.MVC.Services
 {
     public class AutenticacaoService : Service, IAutenticacaoService
     {
-        private readonly HttpClient _httpClient;
-
-        public AutenticacaoService(HttpClient httpClient, IOptions<AppSettings> settings)
+        public AutenticacaoService(HttpClient httpClient, IOptions<AppSettings> settings):base(httpClient, settings)
         {
-            _httpClient = httpClient;
-
-            httpClient.BaseAddress = new Uri(settings.Value.AutenticacaoUrl);
+            _httpClient.BaseAddress = new Uri(_appSettings.AutenticacaoUrl);
         }
 
         public async Task<UsuarioRespostaLogin?> LoginAsync(UsuarioLogin usuarioLogin)

@@ -1,4 +1,5 @@
-﻿using NSE.WebApp.MVC.Extensions;
+﻿using Microsoft.Extensions.Options;
+using NSE.WebApp.MVC.Extensions;
 using System.Net;
 using System.Text;
 using System.Text.Json;
@@ -7,6 +8,16 @@ namespace NSE.WebApp.MVC.Services
 {
     public abstract class Service
     {
+        protected readonly HttpClient _httpClient;
+        protected readonly AppSettings _appSettings;
+
+        protected Service(HttpClient httpClient, IOptions<AppSettings> settings)
+        {
+            _httpClient = httpClient;
+            _appSettings = settings.Value;
+        }
+
+
         protected StringContent GetContent(object content) =>
             new(JsonSerializer.Serialize(content), Encoding.UTF8, "application/json");
 
