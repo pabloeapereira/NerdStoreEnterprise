@@ -1,4 +1,5 @@
 ﻿using NSE.Catalogo.API.Configuration;
+using NSE.WebAPI.Core.Identidade;
 
 public class Startup : IStartup
 {
@@ -29,6 +30,7 @@ public class Startup : IStartup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddApiConfiguration(Configuration);
+        services.AddJwtConfiguration(Configuration);
         services.AddSwaggerConfiguration();
         services.RegisterServices();
     }

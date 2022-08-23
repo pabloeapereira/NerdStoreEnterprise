@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using NSE.Identidade.API.Extensions;
 using NSE.Identidade.API.Models;
+using NSE.WebAPI.Core.Identidade;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -55,7 +55,7 @@ namespace NSE.Identidade.API.Controllers
             var result = await _signInManager.PasswordSignInAsync(usuarioLogin.Email, usuarioLogin.Senha,
                 false, true);
 
-                if (result.Succeeded)
+            if (result.Succeeded)
             {
                 return CustomResponse(await GerarJwtAsync(usuarioLogin.Email));
             }
