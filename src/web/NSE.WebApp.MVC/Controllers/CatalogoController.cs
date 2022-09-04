@@ -3,11 +3,11 @@ using NSE.WebApp.MVC.Services;
 
 namespace NSE.WebApp.MVC.Controllers
 {
-    public class CatalagoController : MainController
+    public class CatalogoController : MainController
     {
         private readonly ICatalogoService _catalogoService;
 
-        public CatalagoController(ICatalogoService catalogoService)
+        public CatalogoController(ICatalogoService catalogoService)
         {
             _catalogoService = catalogoService;
         }
