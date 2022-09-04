@@ -12,12 +12,13 @@ namespace NSE.WebApp.MVC.Controllers
             _catalogoService = catalogoService;
         }
 
-        [HttpGet]
-        [Route("")]
+        [HttpGet("produto-detalhe/{id}")]
+        public async Task<IActionResult> ProdutoDetalhe([FromRoute] Guid id) => View(await _catalogoService.GetByIdAsync(id));
+
+        [HttpGet("")]
         [Route("vitrine")]
         public async Task<IActionResult> Index() => View(await _catalogoService.GetAllAsync());
 
-        [HttpGet("produto-detalhe/{id}")]
-        public async Task<IActionResult> ProdutoDetalhe(Guid id) => View(await _catalogoService.GetByIdAsync(id));
+
     }
 }
