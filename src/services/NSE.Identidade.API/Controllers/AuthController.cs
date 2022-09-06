@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NSE.Identidade.API.Models;
+using NSE.WebAPI.Core.Controllers;
 using NSE.WebAPI.Core.Identidade;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -42,7 +43,7 @@ namespace NSE.Identidade.API.Controllers
                 return Ok(CustomResponse(await GerarJwtAsync(usuarioRegistro.Email)));
 
             foreach (var error in result.Errors)
-                AddErro(error.Description);
+                AddError(error.Description);
 
             return CustomResponse();
         }
@@ -62,11 +63,11 @@ namespace NSE.Identidade.API.Controllers
 
             if (result.IsLockedOut)
             {
-                AddErro("Usuário temporariamente bloqueado por tentativas inválidas");
+                AddError("Usuário temporariamente bloqueado por tentativas inválidas");
                 return CustomResponse();
             }
 
-            AddErro("Usuário ou Senha incorretos");
+            AddError("Usuário ou Senha incorretos");
             return CustomResponse();
         }
 

@@ -1,12 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+﻿using FluentValidation.Results;
+using Microsoft.EntityFrameworkCore;
 using NSE.Clientes.API.Models;
 using NSE.Core.Data;
 using NSE.Core.DomainObjects;
 using NSE.Core.Mediator;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection.Emit;
+using NSE.Core.Messages;
 
 namespace NSE.Clientes.API.Data
 {
@@ -28,7 +26,7 @@ namespace NSE.Clientes.API.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Ignore<ValidationResult>();
-            //modelBuilder.Ignore<Event>();
+            modelBuilder.Ignore<Event>();
 
             foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(
                 e => e.GetProperties().Where(p => p.ClrType == typeof(string))))
@@ -65,7 +63,8 @@ namespace NSE.Clientes.API.Data
                 .ForEach(entity => entity.Entity.ClearEvents());
 
             var tasks = domainEvents
-                .Select(async (domainEvent) => {
+                .Select(async (domainEvent) =>
+                {
                     await mediator.PublishEventAsync(domainEvent);
                 });
 
