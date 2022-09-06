@@ -1,4 +1,5 @@
-﻿using NSE.Clientes.API.Configuration;
+﻿using MediatR;
+using NSE.Clientes.API.Configuration;
 using NSE.WebAPI.Core.Identidade;
 using IStartup = NSE.Clientes.API.Configuration.IStartup;
 
@@ -35,6 +36,7 @@ namespace NFSE.Clientes.API
             services.AddApiConfiguration(Configuration);
             services.AddJwtConfiguration(Configuration);
             services.AddSwaggerConfiguration();
+            services.AddMediatR(typeof(Startup));
             services.RegisterServices();
         }
     }
