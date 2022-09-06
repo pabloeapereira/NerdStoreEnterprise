@@ -1,11 +1,14 @@
-﻿namespace NSE.Cliente.API.Configuration
+﻿using Microsoft.EntityFrameworkCore;
+using NSE.Clientes.API.Data;
+
+namespace NSE.Clientes.API.Configuration
 {
     public static class ApiConfig
     {
         public static IServiceCollection AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            //services.AddDbContext<CatalogoContext>(options =>
-            //   options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ClientesContext>(options =>
+               options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllers();
 

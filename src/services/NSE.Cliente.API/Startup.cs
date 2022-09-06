@@ -1,7 +1,8 @@
-﻿using NSE.Identidade.API.Configuration;
-using IStartup = NSE.Identidade.API.Extensions.IStartup;
+﻿using NSE.Clientes.API.Configuration;
+using NSE.WebAPI.Core.Identidade;
+using IStartup = NSE.Clientes.API.Configuration.IStartup;
 
-namespace NSE.Identidade.API
+namespace NFSE.Clientes.API
 {
     public class Startup : IStartup
     {
@@ -23,20 +24,18 @@ namespace NSE.Identidade.API
             Configuration = builder.Build();
         }
 
-
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddIdentityConfiguration(Configuration);
-            services.AddApiConfiguration();
-            services.AddSwaggerConfiguration();
-
-        }
-
         public void Configure(WebApplication app)
         {
             app.UseSwaggerConfiguration();
-
             app.UseApiConfiguration();
+        }
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddApiConfiguration(Configuration);
+            services.AddJwtConfiguration(Configuration);
+            services.AddSwaggerConfiguration();
+            services.RegisterServices();
         }
     }
 }

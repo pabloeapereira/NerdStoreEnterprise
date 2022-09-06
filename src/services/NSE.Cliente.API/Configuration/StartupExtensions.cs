@@ -1,4 +1,4 @@
-﻿namespace NSE.Identidade.API.Extensions
+﻿namespace NSE.Clientes.API.Configuration
 {
     public static class StartupExtensions
     {
