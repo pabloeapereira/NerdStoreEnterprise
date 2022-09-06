@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using NSE.Clientes.API.Models;
 using NSE.Core.Data;
 using NSE.Core.DomainObjects;
+using NSE.Core.Mediator;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection.Emit;
@@ -11,12 +12,12 @@ namespace NSE.Clientes.API.Data
 {
     public sealed class ClientesContext : DbContext, IUnitOfWork
     {
-        //private readonly IMediatorHandler _mediatorHandler;
+        private readonly IMediatorHandler _mediatorHandler;
 
-        public ClientesContext(DbContextOptions<ClientesContext> options)//, IMediatorHandler mediatorHandler)
+        public ClientesContext(DbContextOptions<ClientesContext> options, IMediatorHandler mediatorHandler)
             : base(options)
         {
-            //_mediatorHandler = mediatorHandler;
+            _mediatorHandler = mediatorHandler;
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             ChangeTracker.AutoDetectChangesEnabled = false;
         }
@@ -42,33 +43,33 @@ namespace NSE.Clientes.API.Data
         public async ValueTask<bool> CommitAsync()
         {
             var sucesso = await SaveChangesAsync() > 0;
-            //if (sucesso) await _mediatorHandler.PublicarEventos(this);
+            if (sucesso) await _mediatorHandler.PublishEventAsync(this);
 
             return sucesso;
         }
     }
 
-    /*public static class MediatorExtension
+    public static class MediatorExtension
     {
-        public static async Task PublicarEventos<T>(this IMediatorHandler mediator, T ctx) where T : DbContext
+        public static async Task PublishEventAsync<T>(this IMediatorHandler mediator, T ctx) where T : DbContext
         {
             var domainEntities = ctx.ChangeTracker
                 .Entries<Entity>()
-                .Where(x => x.Entity.Notificacoes != null && x.Entity.Notificacoes.Any());
+                .Where(x => x.Entity.Events != null && x.Entity.Events.Any());
 
             var domainEvents = domainEntities
-                .SelectMany(x => x.Entity.Notificacoes)
+                .SelectMany(x => x.Entity.Events)
                 .ToList();
 
             domainEntities.ToList()
-                .ForEach(entity => entity.Entity.LimparEventos());
+                .ForEach(entity => entity.Entity.ClearEvents());
 
             var tasks = domainEvents
                 .Select(async (domainEvent) => {
-                    await mediator.PublicarEvento(domainEvent);
+                    await mediator.PublishEventAsync(domainEvent);
                 });
 
             await Task.WhenAll(tasks);
         }
-    }*/
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using FluentValidation.Results;
 using MediatR;
+using NSE.Clientes.API.Application.Events;
 using NSE.Clientes.API.Models;
 using NSE.Core.Messages;
 
@@ -20,7 +21,10 @@ namespace NSE.Clientes.API.Application.Commands
 
             if (!await ClienteNaoExisteAsync(request.Cpf)) return ValidationResult;
 
-            await _clienteRepository.AddAsync(new Cliente(request.Id, request.Nome, request.Email, request.Cpf));
+            var cliente = (new Cliente(request.Id, request.Nome, request.Email, request.Cpf));
+            await _clienteRepository.AddAsync(cliente);
+
+            cliente.AddEvent(new ClienteRegistradoEvent(request.Id, request.Nome, request.Email, request.Cpf));
 
             return await CommitAsync(_clienteRepository.UnitOfWork);
         }
