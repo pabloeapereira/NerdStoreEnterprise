@@ -1,4 +1,5 @@
 ﻿using NSE.Core.Validations;
+using NSE.WebApp.MVC.Extensions;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,7 +13,7 @@ namespace NSE.WebApp.MVC.Models
 
         [Required(ErrorMessage = ValidationMessages.Required)]
         [DisplayName("CPF")]
-        //[Cpf]
+        [CpfAnnotation]
         public string Cpf { get; set; }
 
         [Required(ErrorMessage = ValidationMessages.Required)]

@@ -1,23 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.Extensions.Localization;
+using NSE.Core.DomainObjects;
 using System.ComponentModel.DataAnnotations;
 
 namespace NSE.WebApp.MVC.Extensions
 {
-    public class CpfAttribute : ValidationAttribute
+    public class CpfAnnotation : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            //return Cpf.Validar(value.ToString()) ? ValidationResult.Success :
-                return new ValidationResult("CPF em formato inválido");
+            return Cpf.Validar(value.ToString()) ? ValidationResult.Success :
+                new ValidationResult("CPF em formato inválido");
         }
     }
 
-    public class CpfAttributeAdapter : AttributeAdapterBase<CpfAttribute>
+    public class CpfAttributeAdapter : AttributeAdapterBase<CpfAnnotation>
     {
 
-        public CpfAttributeAdapter(CpfAttribute attribute, IStringLocalizer stringLocalizer) : base(attribute, stringLocalizer)
+        public CpfAttributeAdapter(CpfAnnotation attribute, IStringLocalizer stringLocalizer) : base(attribute, stringLocalizer)
         {
 
         }
@@ -31,10 +32,8 @@ namespace NSE.WebApp.MVC.Extensions
             MergeAttribute(context.Attributes, "data-val", "true");
             MergeAttribute(context.Attributes, "data-val-cpf", GetErrorMessage(context));
         }
-        public override string GetErrorMessage(ModelValidationContextBase validationContext)
-        {
-            return "CPF em formato inválido";
-        }
+        public override string GetErrorMessage(ModelValidationContextBase validationContext) =>
+            "CPF em formato inválido";
     }
 
     public class CpfValidationAttributeAdapterProvider : IValidationAttributeAdapterProvider
@@ -43,7 +42,7 @@ namespace NSE.WebApp.MVC.Extensions
 
         public IAttributeAdapter GetAttributeAdapter(ValidationAttribute attribute, IStringLocalizer stringLocalizer)
         {
-            if (attribute is CpfAttribute CpfAttribute)
+            if (attribute is CpfAnnotation CpfAttribute)
             {
                 return new CpfAttributeAdapter(CpfAttribute, stringLocalizer);
             }
