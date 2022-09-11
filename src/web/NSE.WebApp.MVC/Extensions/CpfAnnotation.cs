@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NSE.WebApp.MVC.Extensions
 {
-    public class CpfAnnotation : ValidationAttribute
+    public class CpfAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -15,12 +15,11 @@ namespace NSE.WebApp.MVC.Extensions
         }
     }
 
-    public class CpfAttributeAdapter : AttributeAdapterBase<CpfAnnotation>
+    public class CpfAttributeAdapter : AttributeAdapterBase<CpfAttribute>
     {
 
-        public CpfAttributeAdapter(CpfAnnotation attribute, IStringLocalizer stringLocalizer) : base(attribute, stringLocalizer)
+        public CpfAttributeAdapter(CpfAttribute attribute, IStringLocalizer stringLocalizer) : base(attribute, stringLocalizer)
         {
-
         }
         public override void AddValidation(ClientModelValidationContext context)
         {
@@ -42,7 +41,7 @@ namespace NSE.WebApp.MVC.Extensions
 
         public IAttributeAdapter GetAttributeAdapter(ValidationAttribute attribute, IStringLocalizer stringLocalizer)
         {
-            if (attribute is CpfAnnotation CpfAttribute)
+            if (attribute is CpfAttribute CpfAttribute)
             {
                 return new CpfAttributeAdapter(CpfAttribute, stringLocalizer);
             }

@@ -13,7 +13,7 @@ namespace NSE.WebApp.MVC.Models
 
         [Required(ErrorMessage = ValidationMessages.Required)]
         [DisplayName("CPF")]
-        [CpfAnnotation]
+        [Cpf]
         public string Cpf { get; set; }
 
         [Required(ErrorMessage = ValidationMessages.Required)]
@@ -21,8 +21,8 @@ namespace NSE.WebApp.MVC.Models
         [DisplayName("E-mail")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        [StringLength(100, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 6)]
+        [Required(ErrorMessage = ValidationMessages.Required)]
+        [StringLength(100, ErrorMessage = ValidationMessages.StringLength, MinimumLength = 6)]
         public string Senha { get; set; }
 
         [DisplayName("Confirme sua senha")]
@@ -37,7 +37,7 @@ namespace NSE.WebApp.MVC.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = ValidationMessages.Required)]
-        [StringLength(100, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = ValidationMessages.StringLength, MinimumLength = 6)]
         public string Senha { get; set; }
     }
 
