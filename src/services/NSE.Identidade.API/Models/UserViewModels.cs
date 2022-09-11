@@ -6,6 +6,13 @@ namespace NSE.Identidade.API.Models
     public class UsuarioRegistro
     {
         [Required(ErrorMessage = ValidationMessages.Required)]
+        public string Nome { get; set; }
+
+        [Required(ErrorMessage = ValidationMessages.Required)]
+        //[Cpf]
+        public string Cpf { get; set; }
+
+        [Required(ErrorMessage = ValidationMessages.Required)]
         [EmailAddress(ErrorMessage = ValidationMessages.Invalid)]
         public string Email { get; set; }
 
