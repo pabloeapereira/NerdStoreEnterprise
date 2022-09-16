@@ -10,8 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EasyNetQ" Version="7.0.4" />
-    <PackageReference Include="EasyNetQ.Serialization.NewtonsoftJson" Version="7.0.4" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.8" />
@@ -29,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\building blocks\NSE.Core\NSE.Core.csproj" />
+    <ProjectReference Include="..\..\building blocks\NSE.MessageBus\NSE.MessageBus.csproj" />
     <ProjectReference Include="..\NSE.Identidade.API\NSE.Identidade.API.csproj" />
   </ItemGroup>
 

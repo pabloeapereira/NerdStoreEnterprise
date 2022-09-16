@@ -1,4 +1,5 @@
 ﻿using EasyNetQ;
+using EasyNetQ.Internals;
 using NSE.Core.Messages.Integration;
 using Polly;
 using RabbitMQ.Client.Exceptions;
@@ -18,59 +19,59 @@ namespace NSE.MessageBus
 
         public bool IsConnected => _bus?.Advanced.IsConnected ?? false;
 
-        public void Publish<T>(T message) where T : IntegrationEvent
+        public void Publish<T>(T message, CancellationToken cancellationToken = default) where T : IntegrationEvent
         {
             TryConnect();
-            _bus.PubSub.Publish(message);
+            _bus.PubSub.Publish(message,cancellationToken);
         }
 
-        public Task PublishAsync<T>(T message) where T : IntegrationEvent
+        public Task PublishAsync<T>(T message, CancellationToken cancellationToken = default) where T : IntegrationEvent
         {
             TryConnect();
-            return _bus.PubSub.PublishAsync(message);
+            return _bus.PubSub.PublishAsync(message,cancellationToken);
         }
 
-        public TResponse Request<TRequest, TResponse>(TRequest request)
+        public TResponse Request<TRequest, TResponse>(TRequest request, CancellationToken cancellationToken = default)
             where TRequest : IntegrationEvent
             where TResponse : ResponseMessage
         {
             TryConnect();
-            return _bus.Rpc.Request<TRequest, TResponse>(request);
+            return _bus.Rpc.Request<TRequest, TResponse>(request,cancellationToken);
         }
 
-        public Task<TResponse> RequestAsync<TRequest, TResponse>(TRequest request)
+        public Task<TResponse> RequestAsync<TRequest, TResponse>(TRequest request, CancellationToken cancellationToken = default)
             where TRequest : IntegrationEvent
             where TResponse : ResponseMessage
         {
             TryConnect();
-            return _bus.Rpc.RequestAsync<TRequest, TResponse>(request);
+            return _bus.Rpc.RequestAsync<TRequest, TResponse>(request, cancellationToken);
         }
 
-        public IDisposable Respond<TRequest, TResponse>(Func<TRequest, TResponse> responder)
+        public IDisposable Respond<TRequest, TResponse>(Func<TRequest, TResponse> responder, CancellationToken cancellationToken = default)
             where TRequest : IntegrationEvent
             where TResponse : ResponseMessage
         {
             TryConnect();
-            return _bus.Rpc.Respond(responder);
+            return _bus.Rpc.Respond(responder,cancellationToken);
         }
-        public Task<IDisposable> RespondAsync<TRequest, TResponse>(Func<TRequest, TResponse> responder)
+        public AwaitableDisposable<IDisposable> RespondAsync<TRequest, TResponse>(Func<TRequest, Task<TResponse>> responder, CancellationToken cancellationToken = default)
             where TRequest : IntegrationEvent
             where TResponse : ResponseMessage
         {
             TryConnect();
-            return _bus.Rpc.RespondAsync(responder);
+            return _bus.Rpc.RespondAsync(responder, cancellationToken);
         }
 
-        public void Subscribe<T>(string subscriptionId, Action<T> onMessage) where T : class
+        public void Subscribe<T>(string subscriptionId, Action<T> onMessage, CancellationToken cancellationToken = default) where T : class
         {
             TryConnect();
-            _bus.PubSub.Subscribe(subscriptionId, onMessage);
+            _bus.PubSub.Subscribe(subscriptionId, onMessage,cancellationToken);
         }
 
-        public Task SubscribeAsync<T>(string subscriptionId, Func<T, Task> onMessage) where T : class
+        public Task SubscribeAsync<T>(string subscriptionId, Func<T, Task> onMessage, CancellationToken cancellationToken = default) where T : class
         {
             TryConnect();
-            return _bus.PubSub.SubscribeAsync(subscriptionId, onMessage);
+            return _bus.PubSub.SubscribeAsync(subscriptionId, onMessage,cancellationToken);
         }
 
         private void TryConnect()

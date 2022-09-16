@@ -38,6 +38,7 @@ namespace NFSE.Clientes.API
             services.AddSwaggerConfiguration();
             services.AddMediatR(typeof(Startup));
             services.RegisterServices();
+            services.AddMessageBusConfiguration(Configuration);
         }
     }
 }
