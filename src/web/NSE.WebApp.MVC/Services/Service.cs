@@ -3,6 +3,7 @@ using NSE.WebApp.MVC.Extensions;
 using System.Net;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace NSE.WebApp.MVC.Services
 {
@@ -43,7 +44,10 @@ namespace NSE.WebApp.MVC.Services
 
         protected JsonSerializerOptions JsonOptions = new()
         {
-            PropertyNameCaseInsensitive = true
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Default
         };
     }
 }

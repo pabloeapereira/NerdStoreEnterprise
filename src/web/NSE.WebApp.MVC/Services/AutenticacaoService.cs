@@ -31,12 +31,11 @@ namespace NSE.WebApp.MVC.Services
 
             if (!TratarErrosResponse(response))
             {
+
                 return new UsuarioRespostaLogin { ResponseResult = await DeserializeObjectResponse<ResponseResult>(response) };
             };
 
-            return await DeserializeObjectResponse<UsuarioRespostaLogin>(response);
+            return (await DeserializeObjectResponse<GenericResponseViewModel<UsuarioRespostaLogin>>(response)).Value;
         }
-
-
     }
 }

@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.ResponseCompression;
 using NSE.WebApp.MVC.Extensions;
 using System.Globalization;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace NSE.WebApp.MVC.Configuration
 {
@@ -9,7 +11,15 @@ namespace NSE.WebApp.MVC.Configuration
     {
         public static IServiceCollection AddMvcConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(null, false));
+                    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+                    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                    options.JsonSerializerOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Default;
+                });
             services.Configure<AppSettings>(configuration);
             services.AddResponseCompression(options =>
             {
