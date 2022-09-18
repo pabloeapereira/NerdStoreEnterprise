@@ -29,10 +29,13 @@ namespace NSE.WebAPI.Core.Controllers
 
         protected ActionResult CustomResponse(ValidationResult validationResult)
         {
-            validationResult.Errors?.ToList().ForEach(error => AddError(error.ErrorMessage));
+            validationResult.Errors?.ForEach(error => AddError(error.ErrorMessage));
 
             return CustomResponse();
         }
+
+        protected void AddError(ValidationResult validationResult) =>
+            validationResult.Errors?.ForEach(error => AddError(error.ErrorMessage));
 
         protected bool OperacaoValida() => !Errors.Any();
 
