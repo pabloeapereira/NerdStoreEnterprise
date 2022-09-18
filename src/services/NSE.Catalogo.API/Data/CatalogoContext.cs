@@ -10,6 +10,8 @@ namespace NSE.Catalogo.API.Data
     {
         public CatalogoContext(DbContextOptions<CatalogoContext> options) : base(options)
         {
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            ChangeTracker.AutoDetectChangesEnabled = false;
         }
 
         public DbSet<Produto> Produtos { get; set; }

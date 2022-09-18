@@ -1,3 +1,4 @@
+using NSE.Carrinho.API;
 using NSE.Carrinho.API.Configuration;
 
-var builder = WebApplication.CreateBuilder(args).UseStartup<Startup>();
+WebApplication.CreateBuilder(args).UseStartup<Startup>();

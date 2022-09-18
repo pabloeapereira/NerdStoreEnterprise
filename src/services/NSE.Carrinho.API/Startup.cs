@@ -4,7 +4,7 @@ using NSE.WebAPI.Core.Identidade;
 
 namespace NSE.Carrinho.API
 {
-    public class Startup : IStartup
+    public class Startup : Configuration.IStartup
     {
         public IConfiguration Configuration { get; }
 
