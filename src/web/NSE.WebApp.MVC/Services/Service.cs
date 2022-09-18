@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using NSE.WebApp.MVC.Extensions;
+using NSE.WebApp.MVC.Models;
 using System.Net;
 using System.Text;
 using System.Text.Json;
@@ -40,6 +41,12 @@ namespace NSE.WebApp.MVC.Services
 
             response.EnsureSuccessStatusCode();
             return true;
+        }
+
+        protected async Task<ResponseResult> TratarErrosResponseERetornarResponseResultAsync(HttpResponseMessage? response)
+        {
+            if (!TratarErrosResponse(response)) return await DeserializeObjectResponse<ResponseResult>(response);
+            return new ResponseResult();
         }
 
         protected JsonSerializerOptions JsonOptions = new()

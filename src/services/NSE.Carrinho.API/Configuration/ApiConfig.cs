@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NSE.Carrinho.API.Data;
 using NSE.WebAPI.Core.Identidade;
+using System.Diagnostics;
 
 namespace NSE.Carrinho.API.Configuration
 {
@@ -9,7 +10,11 @@ namespace NSE.Carrinho.API.Configuration
         public static IServiceCollection AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<CarrinhoContext>(options =>
-               options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            {
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                if (Debugger.IsAttached)
+                    options.EnableSensitiveDataLogging();
+            });
 
             services.AddControllers();
 

@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using NSE.Core.Validations;
+using System.Text.Json.Serialization;
 
 namespace NSE.Carrinho.API.Models
 {
@@ -16,6 +17,7 @@ namespace NSE.Carrinho.API.Models
         public decimal Valor { get; set; }
         public string Imagem { get; set; }
         public Guid CarrinhoId { get; set; }
+        [JsonIgnore]
         public CarrinhoCliente CarrinhoCliente { get; set; }
 
         internal void SetCarrinho(Guid carrinhoId) =>
@@ -29,14 +31,14 @@ namespace NSE.Carrinho.API.Models
 
         internal bool IsValid() => new ItemCarrinhoValidation().Validate(this).IsValid;
 
-        public class ItemCarrinhoValidation: AbstractValidator<CarrinhoItem>
+        public class ItemCarrinhoValidation : AbstractValidator<CarrinhoItem>
         {
             public ItemCarrinhoValidation()
             {
                 RuleFor(x => x.ProdutoId).NotEqual(Guid.Empty).WithMessage("Id do produto inválido");
                 RuleFor(x => x.Nome).NotEmpty().WithMessage(ValidationMessages.Required);
                 RuleFor(x => x.Quantidade).GreaterThan(0).WithMessage(item => $"A quantidade mínima para o {item.Nome} é 1")
-                    .LessThan(CarrinhoCliente.MAX_QUANTIDADE_ITEM).WithMessage("A quantidade máxima de um item é {LessThan}");
+                    .LessThanOrEqualTo(CarrinhoCliente.MAX_QUANTIDADE_ITEM).WithMessage($"A quantidade máxima de um item é {CarrinhoCliente.MAX_QUANTIDADE_ITEM}");
                 RuleFor(x => x.Valor).GreaterThan(0).WithMessage("O valor do item precisa ser maior que 0.00");
             }
         }

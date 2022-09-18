@@ -1,4 +1,5 @@
-﻿using NSE.Catalogo.API.Configuration;
+﻿using Microsoft.AspNetCore.Mvc;
+using NSE.Catalogo.API.Configuration;
 using NSE.WebAPI.Core.Identidade;
 using IStartup = NSE.Catalogo.API.Configuration.IStartup;
 
@@ -32,6 +33,10 @@ namespace NSE.Catalogo.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
             services.AddApiConfiguration(Configuration);
             services.AddJwtConfiguration(Configuration);
             services.AddSwaggerConfiguration();

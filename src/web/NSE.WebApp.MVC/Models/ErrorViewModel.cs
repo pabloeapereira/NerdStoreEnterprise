@@ -20,6 +20,6 @@ namespace NSE.WebApp.MVC.Models
 
     public class ResponseErrorMessage
     {
-        public IEnumerable<string> Mensagens { get; set; }
+        public IEnumerable<string> Mensagens { get; set; } = new List<string>();
     }
 }

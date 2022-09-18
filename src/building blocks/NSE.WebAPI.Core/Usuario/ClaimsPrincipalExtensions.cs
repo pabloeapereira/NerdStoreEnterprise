@@ -8,7 +8,7 @@ namespace NSE.WebAPI.Core.Usuario
         {
             if (principal is null)
                 throw new ArgumentException(nameof(principal));
-            return principal.FindFirstValue("sub");
+            return principal.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
         public static string GetUserEmail(this ClaimsPrincipal principal)
