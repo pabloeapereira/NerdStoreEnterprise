@@ -1,4 +1,4 @@
-﻿using NSE.Core.DomainObjects;
+﻿using NSE.Core.Comunication;
 using NSE.WebApp.MVC.Models;
 
 namespace NSE.WebApp.MVC.Services

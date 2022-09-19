@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
-using NSE.Core.DomainObjects;
+using NSE.Core.Comunication;
 using NSE.Core.Extensions;
 using NSE.WebApp.MVC.Extensions;
 using System.Net;

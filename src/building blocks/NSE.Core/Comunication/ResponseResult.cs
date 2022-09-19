@@ -1,4 +1,4 @@
-﻿namespace NSE.Core.DomainObjects
+﻿namespace NSE.Core.Comunication
 {
     public class ResponseResult
     {

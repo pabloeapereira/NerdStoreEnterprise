@@ -1,4 +1,5 @@
-﻿using NSE.Core.DomainObjects;
+﻿using NSE.Core.Comunication;
+using NSE.Core.DomainObjects;
 using NSE.Core.Validations;
 using NSE.WebApp.MVC.Extensions;
 using System.ComponentModel;

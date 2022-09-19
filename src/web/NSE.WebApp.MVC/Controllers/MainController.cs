@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NSE.Core.DomainObjects;
+using NSE.Core.Comunication;
 
 namespace NSE.WebApp.MVC.Controllers
 {

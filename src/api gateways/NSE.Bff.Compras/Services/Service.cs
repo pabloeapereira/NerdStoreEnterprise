@@ -1,4 +1,4 @@
-﻿using NSE.Core.DomainObjects;
+﻿using NSE.Core.Comunication;
 using NSE.Core.Extensions;
 using System.Net;
 using System.Text;
