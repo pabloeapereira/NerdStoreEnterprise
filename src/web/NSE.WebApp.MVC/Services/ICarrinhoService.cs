@@ -1,4 +1,5 @@
-﻿using NSE.WebApp.MVC.Models;
+﻿using NSE.Core.DomainObjects;
+using NSE.WebApp.MVC.Models;
 
 namespace NSE.WebApp.MVC.Services
 {

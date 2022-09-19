@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using NSE.Core.DomainObjects;
 using NSE.WebApp.MVC.Extensions;
 using NSE.WebApp.MVC.Models;
 
