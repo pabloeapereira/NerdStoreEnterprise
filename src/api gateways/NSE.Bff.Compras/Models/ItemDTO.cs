@@ -2,6 +2,7 @@
 {
     public abstract class ItemDTO 
     {
+        public Guid Id { get; set; }
         public Guid ProdutoId { get; set; }
         public string Nome { get; set; }
         public decimal Valor { get; set; }

@@ -15,14 +15,14 @@ namespace NSE.WebApp.MVC.Services
         {
             var response = await _httpClient.GetAsync("/catalogo/produtos/");
             TratarErrosResponse(response);
-            return await DeserializeObjectResponse<IEnumerable<ProdutoViewModel>>(response);
+            return await DeserializeObjectResponseAsync<IEnumerable<ProdutoViewModel>>(response);
         }
 
         public async ValueTask<ProdutoViewModel> GetByIdAsync(Guid id)
         {
             var response = await _httpClient.GetAsync($"/catalogo/produtos/{id}");
             TratarErrosResponse(response);
-            return await DeserializeObjectResponse<ProdutoViewModel>(response);
+            return await DeserializeObjectResponseAsync<ProdutoViewModel>(response);
         }
     }
 }

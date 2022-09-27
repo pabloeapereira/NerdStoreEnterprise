@@ -19,10 +19,10 @@ namespace NSE.WebApp.MVC.Services
 
             if (!TratarErrosResponse(response))
             {
-                return new UsuarioRespostaLogin { ResponseResult = await DeserializeObjectResponse<ResponseResult>(response) };
+                return new UsuarioRespostaLogin { ResponseResult = await DeserializeObjectResponseAsync<ResponseResult>(response) };
             };
 
-            return await DeserializeObjectResponse<UsuarioRespostaLogin>(response);
+            return await DeserializeObjectResponseAsync<UsuarioRespostaLogin>(response);
         }
 
         public async Task<UsuarioRespostaLogin?> RegistroAsync(UsuarioRegistro usuarioRegistro)
@@ -33,10 +33,10 @@ namespace NSE.WebApp.MVC.Services
             if (!TratarErrosResponse(response))
             {
 
-                return new UsuarioRespostaLogin { ResponseResult = await DeserializeObjectResponse<ResponseResult>(response) };
+                return new UsuarioRespostaLogin { ResponseResult = await DeserializeObjectResponseAsync<ResponseResult>(response) };
             };
 
-            return (await DeserializeObjectResponse<GenericResponseViewModel<UsuarioRespostaLogin>>(response)).Value;
+            return (await DeserializeObjectResponseAsync<GenericResponseViewModel<UsuarioRespostaLogin>>(response)).Value;
         }
     }
 }

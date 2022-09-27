@@ -29,7 +29,7 @@ namespace NSE.Bff.Compras.Services
             var response = await _httpClient.GetAsync("carrinho");
             TratarErrosResponse(response);
 
-            return await DeserializeObjectResponse<CarrinhoDTO>(response);
+            return await DeserializeObjectResponseAsync<CarrinhoDTO>(response);
         }
 
         public async Task<ResponseResult> RemoverItemCarrinhoAsync(Guid produtoId)
