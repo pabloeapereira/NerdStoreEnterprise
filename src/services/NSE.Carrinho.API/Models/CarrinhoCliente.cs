@@ -16,10 +16,45 @@ namespace NSE.Carrinho.API.Models
         public Guid ClienteId { get; set; }
         public decimal ValorTotal { get; set; }
         public ICollection<CarrinhoItem> Itens { get; set; } = new List<CarrinhoItem>();
-
         public ValidationResult ValidationResult { get; set; }
+        public bool VoucherUtilizado { get; set; }
+        public decimal Desconto { get; set; }
+        public Voucher Voucher { get; private set; }
 
-        internal void CalcularValorCarrinho() => ValorTotal = Itens.Sum(i => i.CalcularValor());
+        public void AplicarVoucher(Voucher voucher)
+        {
+            Voucher = voucher;
+            VoucherUtilizado = true;
+            CalcularValorCarrinho();
+        }
+
+        private void CalcularValorTotalDesconto()
+        {
+            if (!VoucherUtilizado) return;
+
+            var desconto = decimal.Zero;
+            var valor = ValorTotal;
+
+            if (Voucher.TipoDesconto == TipoDescontoVoucher.Porcentagem && Voucher.Percentual.HasValue)
+            {
+                desconto = (valor * Voucher.Percentual.Value) / 100;
+                valor -= desconto;
+            }
+            else if (Voucher.ValorDesconto.HasValue)
+            {
+                desconto = Voucher.ValorDesconto.Value;
+                valor -= desconto;
+            }
+
+            ValorTotal = valor < decimal.Zero ? decimal.Zero : valor;
+            Desconto = desconto;
+        }
+
+        internal void CalcularValorCarrinho()
+        {
+            ValorTotal = Itens.Sum(i => i.CalcularValor());
+            CalcularValorTotalDesconto();
+        }
 
         internal bool CarrinhoItemExistente(CarrinhoItem item) => Itens.Any(p => p.ProdutoId == item.ProdutoId);
 
@@ -72,7 +107,7 @@ namespace NSE.Carrinho.API.Models
             return ValidationResult.IsValid;
         }
 
-        public class CarrinhoClienteValidation : AbstractValidator<CarrinhoCliente>
+        private class CarrinhoClienteValidation : AbstractValidator<CarrinhoCliente>
         {
             public CarrinhoClienteValidation()
             {
@@ -81,5 +116,6 @@ namespace NSE.Carrinho.API.Models
                 RuleFor(c => c.ValorTotal).GreaterThan(0).WithMessage("O valor total do carrinho precisa ser maior que 0.00");
             }
         }
+
     }
 }
