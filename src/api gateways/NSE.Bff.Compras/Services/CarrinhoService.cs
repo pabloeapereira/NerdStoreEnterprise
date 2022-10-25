@@ -37,6 +37,13 @@ namespace NSE.Bff.Compras.Services
             var response = await _httpClient.DeleteAsync($"carrinho/{produtoId}");
             return await TratarErrosResponseERetornarResponseResultAsync(response);
         }
+
+        public async Task<ResponseResult> AplicarVoucherCarrinhoAsync(VoucherDTO voucher)
+        {
+            var response = await _httpClient.PostAsJsonAsync("carrinho/aplicar-voucher", voucher);
+
+            return await TratarErrosResponseERetornarResponseResultAsync(response);
+        }
     }
 
     public interface ICarrinhoService 
@@ -45,5 +52,6 @@ namespace NSE.Bff.Compras.Services
         Task<ResponseResult> AdicionarItemCarrinhoAsync(ItemCarrinhoDTO item);
         Task<ResponseResult> AtualizarItemCarrinhoAsync(Guid produtoId, ItemCarrinhoDTO produto);
         Task<ResponseResult> RemoverItemCarrinhoAsync(Guid produtoId);
+        Task<ResponseResult> AplicarVoucherCarrinhoAsync(VoucherDTO voucher);
     }
 }

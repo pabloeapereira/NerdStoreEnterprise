@@ -1,4 +1,5 @@
 ﻿using NSE.Core.Mediator;
+using NSE.Pedido.API.Application.Queries;
 using NSE.Pedidos.Domain.Vouchers;
 using NSE.Pedidos.Infra.Data;
 using NSE.Pedidos.Infra.Data.Repository;
@@ -10,13 +11,22 @@ namespace NSE.Pedido.API.Configuration
     {
         public static void RegisterServices(this IServiceCollection services)
         {
-            services.AddScoped<IMediatorHandler, MediatorHandler>();
+            #region API
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IAspNetUser, AspNetUser>();
-            services.AddScoped<PedidosContext>();
+            #endregion
 
-            
+
+            #region Application
+            services.AddScoped<IMediatorHandler, MediatorHandler>();
+            services.AddScoped<IVoucherQueries, VoucherQueries>();
+
+            #endregion
+
+            #region Data
+            services.AddScoped<PedidosContext>();
             services.AddScoped<IVoucherRepository, VoucherRepository>();
+            #endregion
         }
     }
 }

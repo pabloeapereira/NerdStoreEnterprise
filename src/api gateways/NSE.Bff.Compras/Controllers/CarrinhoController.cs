@@ -12,11 +12,13 @@ namespace NSE.Bff.Compras.Controllers
     {
         private readonly ICarrinhoService _carrinhoService;
         private readonly ICatalogoService _catalogoService;
+        private readonly IPedidoService _pedidoService;
 
-        public CarrinhoController(ICarrinhoService carrinhoService, ICatalogoService catalogoService)
+        public CarrinhoController(ICarrinhoService carrinhoService, ICatalogoService catalogoService, IPedidoService pedidoService)
         {
             _carrinhoService = carrinhoService;
             _catalogoService = catalogoService;
+            _pedidoService = pedidoService;
         }
 
         [HttpGet("carrinho")]
@@ -67,6 +69,20 @@ namespace NSE.Bff.Compras.Controllers
             }
 
             return CustomResponse(await _carrinhoService.RemoverItemCarrinhoAsync(produtoId));
+        }
+
+        [HttpPost("carrinho/aplicar-voucher")]
+        public async Task<IActionResult> AplicarVoucher([FromBody] string voucherCodigo)
+        {
+            var voucher = await _pedidoService.GetVoucherByCodigoAsync(voucherCodigo);
+            if (voucher is null)
+            {
+                AddError("Voucher inválido ou não encontrado!");
+                return CustomResponse();
+            }
+
+            var response = await _carrinhoService.AplicarVoucherCarrinhoAsync(voucher);
+            return CustomResponse(response);
         }
 
         private async Task ValidarItemCarrinhoAsync(ItemProdutoDTO produto, int quantidade)

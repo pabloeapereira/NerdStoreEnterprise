@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NSE.Pedido.API.AutoMappers;
 using NSE.Pedidos.Infra.Data;
 using NSE.WebAPI.Core.Identidade;
 using System.Diagnostics;
@@ -15,7 +16,9 @@ namespace NSE.Pedido.API.Configuration
                 if (Debugger.IsAttached)
                     options.EnableSensitiveDataLogging();
             });
-            
+
+            services.AddAutoMapper(typeof(VoucherMapper).Assembly);
+
             services.AddControllers();
 
             services.AddCors(options =>
