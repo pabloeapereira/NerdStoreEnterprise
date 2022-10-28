@@ -37,7 +37,7 @@ namespace NSE.Carrinho.API.Models
 
             if (Voucher.TipoDesconto == TipoDescontoVoucher.Porcentagem && Voucher.Percentual.HasValue)
             {
-                desconto = (valor * Voucher.Percentual.Value) / 100;
+                desconto = (valor * Voucher.Percentual.Value);
                 valor -= desconto;
             }
             else if (Voucher.ValorDesconto.HasValue)

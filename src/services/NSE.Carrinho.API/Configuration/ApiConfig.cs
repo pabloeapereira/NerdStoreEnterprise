@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NSE.Carrinho.API.Data;
 using NSE.WebAPI.Core.Identidade;
 using System.Diagnostics;
@@ -14,6 +15,11 @@ namespace NSE.Carrinho.API.Configuration
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
                 if (Debugger.IsAttached)
                     options.EnableSensitiveDataLogging();
+            });
+
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
             });
 
             services.AddControllers();

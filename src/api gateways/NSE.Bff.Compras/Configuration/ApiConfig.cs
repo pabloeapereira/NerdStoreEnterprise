@@ -1,4 +1,5 @@
-﻿using NSE.Bff.Compras.Extensions;
+﻿using Microsoft.AspNetCore.Mvc;
+using NSE.Bff.Compras.Extensions;
 using NSE.WebAPI.Core.Identidade;
 
 namespace NSE.Bff.Compras.Configuration
@@ -7,12 +8,11 @@ namespace NSE.Bff.Compras.Configuration
     {
         public static IServiceCollection AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            /*services.AddDbContext<CarrinhoContext>(options =>
+
+            services.Configure<ApiBehaviorOptions>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-                if (Debugger.IsAttached)
-                    options.EnableSensitiveDataLogging();
-            });*/
+                options.SuppressModelStateInvalidFilter = true;
+            });
 
             services.AddControllers();
 
