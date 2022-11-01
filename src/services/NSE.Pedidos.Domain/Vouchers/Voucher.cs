@@ -30,5 +30,13 @@ namespace NSE.Pedidos.Domain.Vouchers
             Utilizado = true;
             Quantidade = 0;
         }
+
+       public void DebitarQuantidade()
+       {
+           Quantidade--;
+           if (Quantidade >= 1) return;
+
+           MarcarComoUtilizado();
+       }
     }
 }

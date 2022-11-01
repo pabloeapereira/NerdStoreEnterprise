@@ -16,10 +16,10 @@ namespace NSE.Pedidos.Infra.Data.Repository
         public Task<Voucher?> GetByCodigoAsync(string codigo) =>
             _context.Vouchers.FirstOrDefaultAsync(v => v.Codigo == codigo);
 
+        public void Update(Voucher voucher) => _context.Vouchers.Update(voucher);
+
         public IUnitOfWork UnitOfWork => _context;
 
         public void Dispose() => _context.Dispose();
-
-
     }
 }
