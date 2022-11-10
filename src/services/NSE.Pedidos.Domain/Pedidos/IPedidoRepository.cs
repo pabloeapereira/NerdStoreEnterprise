@@ -1,8 +1,9 @@
 ﻿using NSE.Core.Data;
+using NSE.Pedidos.Domain.Interfaces;
 
 namespace NSE.Pedidos.Domain.Pedidos
 {
-    public interface IPedidoRepository : IRepository<Pedido>
+    public interface IPedidoRepository : IRepository<Pedido>, IRepositoryDbConnection
     {
         ValueTask<Pedido?> GetByIdAsync(Guid id);
         Task<IEnumerable<Pedido>> GetListByClienteIdAsync(Guid clienteId);

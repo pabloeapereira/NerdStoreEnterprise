@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Data.Common;
+using Microsoft.EntityFrameworkCore;
 using NSE.Core.Data;
 using NSE.Pedidos.Domain.Pedidos;
 
@@ -30,5 +31,6 @@ namespace NSE.Pedidos.Infra.Data.Repository
             _context.PedidoItens.FirstOrDefaultAsync(p => p.ProdutoId == produtoId && p.PedidoId == pedidoId);
 
         public void Dispose() => _context.Dispose();
+        public DbConnection GetDbConnection() => _context.Database.GetDbConnection();
     }
 }

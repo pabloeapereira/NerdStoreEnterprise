@@ -13,7 +13,7 @@ namespace NSE.Pedido.API.Application.DTO
         public string VoucherCodigo { get; set; }
         public bool VoucherUtilizado { get; set; }
 
-        public IEnumerable<PedidoItemDTO> PedidoItens { get; set; }
-        public Endereco Endereco { get; set; }
+        public IList<PedidoItemDTO> PedidoItens { get; set; }
+        public EnderecoDTO Endereco { get; set; }
     }
 }
