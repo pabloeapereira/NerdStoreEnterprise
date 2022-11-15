@@ -37,7 +37,7 @@ namespace NSE.Carrinho.API
             services.AddSwaggerConfiguration();
             services.AddMediatR(typeof(Startup));
             services.RegisterServices();
-            //services.AddMessageBusConfiguration(Configuration);
+            services.AddMessageBusConfiguration(Configuration);
         }
     }
 }

@@ -4,7 +4,7 @@ using NSE.Carrinho.API.Models;
 
 namespace NSE.Carrinho.API.Data
 {
-    public class CarrinhoContext : DbContext
+    public sealed class CarrinhoContext : DbContext
     {
         public CarrinhoContext(DbContextOptions<CarrinhoContext> options) : base(options)
         {
@@ -49,7 +49,7 @@ namespace NSE.Carrinho.API.Data
                 .HasForeignKey(c => c.CarrinhoId);
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes()
-                .SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
+                .SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.Cascade;
         }
     }
 }

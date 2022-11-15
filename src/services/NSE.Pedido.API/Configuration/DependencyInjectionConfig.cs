@@ -1,5 +1,6 @@
 ﻿using NSE.Core.Mediator;
 using NSE.Pedido.API.Application.Queries;
+using NSE.Pedidos.Domain.Pedidos;
 using NSE.Pedidos.Domain.Vouchers;
 using NSE.Pedidos.Infra.Data;
 using NSE.Pedidos.Infra.Data.Repository;
@@ -26,6 +27,8 @@ namespace NSE.Pedido.API.Configuration
             #region Data
             services.AddScoped<PedidosContext>();
             services.AddScoped<IVoucherRepository, VoucherRepository>();
+            services.AddScoped<IPedidoRepository, PedidoRepository>();
+
             #endregion
         }
     }
