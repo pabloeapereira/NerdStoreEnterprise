@@ -1,4 +1,8 @@
-﻿using NSE.Core.Mediator;
+﻿using FluentValidation.Results;
+using MediatR;
+using NSE.Core.Mediator;
+using NSE.Pedido.API.Application.Commands;
+using NSE.Pedido.API.Application.Events;
 using NSE.Pedido.API.Application.Queries;
 using NSE.Pedidos.Domain.Pedidos;
 using NSE.Pedidos.Domain.Vouchers;
@@ -17,10 +21,19 @@ namespace NSE.Pedido.API.Configuration
             services.AddScoped<IAspNetUser, AspNetUser>();
             #endregion
 
+            #region Commands
+            services.AddScoped<IRequestHandler<AdicionarPedidoCommand, ValidationResult>, PedidoCommandHandler>();
+            #endregion
+
+            #region Events
+            services.AddScoped<INotificationHandler<PedidoRealizadoEvent>, PedidoEventHandler>();
+            #endregion
+
 
             #region Application
             services.AddScoped<IMediatorHandler, MediatorHandler>();
             services.AddScoped<IVoucherQueries, VoucherQueries>();
+            services.AddScoped<IPedidoQueries, PedidoQueries>();
 
             #endregion
 
