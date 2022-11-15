@@ -1,26 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NSE.Clientes.API.Application.Commands;
+using NSE.Clientes.API.Data.Repository;
 using NSE.Core.Mediator;
 using NSE.WebAPI.Core.Controllers;
+using NSE.WebAPI.Core.Usuario;
 
 namespace NSE.Clientes.API.Controllers
 {
+    [Route("clientes")]
     public class ClientesController : MainController
     {
         private readonly IMediatorHandler _mediatorHandler;
+        private readonly IClienteRepository _clienteRepository;
+        private readonly IAspNetUser _user;
 
-        public ClientesController(IMediatorHandler mediatorHandler)
+        public ClientesController(IMediatorHandler mediatorHandler, IClienteRepository clienteRepository, IAspNetUser user)
         {
             _mediatorHandler = mediatorHandler;
+            _clienteRepository = clienteRepository;
+            _user = user;
         }
 
-        [HttpGet("clientes")]
-        public async Task<IActionResult> Index()
+        [HttpGet("endereco")]
+        public async Task<IActionResult> ObterEndereco()
         {
-            var result = await _mediatorHandler.SendCommandAsync(new RegistrarClienteCommand(Guid.NewGuid(),"PabloTeste1","pablo.teste@teste.com", "42912563020"));
+            var endereco = await _clienteRepository.GetEnderecoByClientIdAsync(_user.ObterUserId());
 
-
-            return CustomResponse(result);
+            return endereco is null ? NotFound() : CustomResponse(endereco);
         }
     }
 }

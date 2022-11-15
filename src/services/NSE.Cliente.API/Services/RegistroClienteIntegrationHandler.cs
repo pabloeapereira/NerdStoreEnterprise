@@ -1,4 +1,5 @@
-﻿using NSE.Clientes.API.Application.Commands;
+﻿using EasyNetQ;
+using NSE.Clientes.API.Application.Commands;
 using NSE.Core.Mediator;
 using NSE.Core.Messages.Integration;
 using NSE.MessageBus;
@@ -30,7 +31,7 @@ namespace NSE.Clientes.API.Services
             _bus.AdvancedBus.Connected += OnConnect;
         }
 
-        private void OnConnect(object s, EventArgs e)
+        private void OnConnect(object? s, ConnectedEventArgs connectedEventArgs)
         {
             SetResponder();
         }

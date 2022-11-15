@@ -13,9 +13,11 @@ namespace NSE.WebApp.MVC.Services
         Task<ResponseResult> AtualizarItemCarrinhoAsync(Guid produtoId, ItemCarrinhoViewModel produto);
         Task<ResponseResult> RemoverItemCarrinhoAsync(Guid produtoId);
         Task<ResponseResult> AplicarvoucherCarrinhoAsync(string voucher);
+        PedidoTransacaoViewModel MapearParaPedido(CarrinhoViewModel carrinho, EnderecoViewModel endereco);
     }
     public class ComprasBffService : Service, IComprasBffService
     {
+        #region Carrinho
         public ComprasBffService(HttpClient httpClient, IOptions<AppSettings> settings) : base(httpClient, settings)
         {
             _httpClient.BaseAddress = new Uri($"{_appSettings.ComprasBffUrl}/compras/");
@@ -59,6 +61,24 @@ namespace NSE.WebApp.MVC.Services
         {
             var response = await _httpClient.PostAsJsonAsync("carrinho/aplicar-voucher", voucher, JsonOptions);
             return await TratarErrosResponseERetornarResponseResultAsync(response);
+        }
+
+        #endregion
+
+        public PedidoTransacaoViewModel MapearParaPedido(CarrinhoViewModel carrinho, EnderecoViewModel endereco)
+        {
+            var pedido = new PedidoTransacaoViewModel
+            {
+                Pedido = carrinho.ValorTotal,
+                Itens = carrinho.Itens,
+                Desconto = carrinho.Desconto,
+                VoucherUtilizado = carrinho.VoucherUtilizado,
+                VoucherCodigo = carrinho.Voucher?.Codigo
+            };
+
+            pedido.Endereco = endereco;
+
+            return pedido;
         }
     }
 }

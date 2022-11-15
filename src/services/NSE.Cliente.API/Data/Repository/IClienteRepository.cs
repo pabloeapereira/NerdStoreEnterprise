@@ -1,6 +1,7 @@
-﻿using NSE.Core.Data;
+﻿using NSE.Clientes.API.Models;
+using NSE.Core.Data;
 
-namespace NSE.Clientes.API.Models
+namespace NSE.Clientes.API.Data.Repository
 {
     public interface IClienteRepository : IRepository<Cliente>
     {
@@ -9,5 +10,7 @@ namespace NSE.Clientes.API.Models
         ValueTask<Cliente?> GetById(Guid id);
         Task<Cliente?> GetByCpfAsync(string cpf);
         Task<bool> ClienteExistsByCpfAsync(string cpf);
+        Task<Endereco?> GetEnderecoByClientIdAsync(Guid id);
+        Task AddAsync(Endereco endereco);
     }
 }

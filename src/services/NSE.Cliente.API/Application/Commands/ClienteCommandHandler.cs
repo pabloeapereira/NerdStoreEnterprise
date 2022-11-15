@@ -1,12 +1,15 @@
 ﻿using FluentValidation.Results;
 using MediatR;
 using NSE.Clientes.API.Application.Events;
+using NSE.Clientes.API.Data.Repository;
 using NSE.Clientes.API.Models;
 using NSE.Core.Messages;
 
 namespace NSE.Clientes.API.Application.Commands
 {
-    public class ClienteCommandHandler : CommandHandler, IRequestHandler<RegistrarClienteCommand, ValidationResult>
+    public class ClienteCommandHandler : CommandHandler, 
+        IRequestHandler<RegistrarClienteCommand, ValidationResult>,
+        IRequestHandler<AdicionarEnderecoCommand,ValidationResult>
     {
         private readonly IClienteRepository _clienteRepository;
 
@@ -29,6 +32,17 @@ namespace NSE.Clientes.API.Application.Commands
             return await CommitAsync(_clienteRepository.UnitOfWork);
         }
 
+        public async Task<ValidationResult> Handle(AdicionarEnderecoCommand request, CancellationToken cancellationToken)
+        {
+            if(!request.IsValid()) return request.ValidationResult;
+
+            var endereco = new Endereco(request.Logradouro, request.Numero, request.Complemento, request.Bairro, request.Cep, request.Cidade, request.Estado);
+            await _clienteRepository.AddAsync(endereco);
+
+            return await CommitAsync(_clienteRepository.UnitOfWork);
+        }
+
+        #region Private Methods
         private async ValueTask<bool> ClienteNaoExisteAsync(string cpf)
         {
             if (!await _clienteRepository.ClienteExistsByCpfAsync(cpf)) return true;
@@ -36,5 +50,6 @@ namespace NSE.Clientes.API.Application.Commands
             AddError("Este CPF já está em uso.");
             return false;
         }
+        #endregion
     }
 }

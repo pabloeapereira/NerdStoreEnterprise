@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NSE.Clientes.API.Data;
+using NSE.Clientes.API.Models;
 using NSE.Core.Data;
 
-namespace NSE.Clientes.API.Models
+namespace NSE.Clientes.API.Data.Repository
 {
     public class ClienteRepository : IClienteRepository
     {
         private readonly ClientesContext _context;
-        public IUnitOfWork UnitOfWork => _context;
 
         public ClienteRepository(ClientesContext context)
         {
@@ -24,6 +24,11 @@ namespace NSE.Clientes.API.Models
 
         public Task<bool> ClienteExistsByCpfAsync(string cpf) => _context.Clientes.AnyAsync(c => c.Cpf.Numero == cpf);
 
+        public Task<Endereco?> GetEnderecoByClientIdAsync(Guid id) => _context.Enderecos.FirstOrDefaultAsync(x => x.ClienteId == id);
+
+        public async Task AddAsync(Endereco endereco) => await _context.Enderecos.AddAsync(endereco);
+
+        public IUnitOfWork UnitOfWork => _context;
         public void Dispose() => _context.Dispose();
     }
 }
