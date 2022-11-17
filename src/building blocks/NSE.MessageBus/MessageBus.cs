@@ -94,7 +94,7 @@ namespace NSE.MessageBus
             });
         }
 
-        private void OnDisconnect(object s, EventArgs e)
+        private void OnDisconnect(object? s, EventArgs e)
         {
             var policy = Policy.Handle<EasyNetQException>()
                 .Or<BrokerUnreachableException>()

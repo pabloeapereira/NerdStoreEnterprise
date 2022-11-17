@@ -3,14 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using NSE.Core.Mediator;
 using NSE.Pedido.API.Application.Commands;
 using NSE.Pedido.API.Application.Queries;
-using NSE.Pedidos.Domain.Pedidos;
 using NSE.WebAPI.Core.Controllers;
 using NSE.WebAPI.Core.Usuario;
 
 namespace NSE.Pedido.API.Controllers
 {
-    [Authorize]
-    public sealed class PedidoController:MainController
+    [Authorize,Route("pedido")]
+    public sealed class PedidoController : MainController
     {
         private readonly IMediatorHandler _mediator;
         private readonly IAspNetUser _user;
@@ -23,21 +22,21 @@ namespace NSE.Pedido.API.Controllers
             _pedidoQueries = pedidoQueries;
         }
 
-        [HttpPost("pedido")]
+        [HttpPost]
         public async Task<IActionResult> AdicionarPedido(AdicionarPedidoCommand pedido)
         {
             pedido.ClienteId = _user.ObterUserId();
             return CustomResponse(await _mediator.SendCommandAsync(pedido));
         }
 
-        [HttpGet("pedido/ultimo")]
+        [HttpGet("ultimo")]
         public async Task<IActionResult> UltimoPedido()
         {
             var pedido = await _pedidoQueries.GetUltimoPedidoAsync(_user.ObterUserId());
             return pedido is null ? NotFound() : CustomResponse(pedido);
         }
 
-        [HttpGet("pedido/lista-cliente")]
+        [HttpGet("lista-cliente")]
         public async Task<IActionResult> ListarPorCliente()
         {
             var pedidos = await _pedidoQueries.GetListByClienteIdAsync(_user.ObterUserId());

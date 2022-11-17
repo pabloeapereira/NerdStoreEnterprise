@@ -7,14 +7,25 @@ namespace NSE.WebApp.MVC.Services
 {
     public interface IComprasBffService
     {
+        #region Carrinho
         Task<CarrinhoViewModel> GetCarrinhoAsync();
         Task<int> GetQuantidadeCarrinhoAsync();
         Task<ResponseResult> AdicionarItemCarrinhoAsync(ItemCarrinhoViewModel item);
         Task<ResponseResult> AtualizarItemCarrinhoAsync(Guid produtoId, ItemCarrinhoViewModel produto);
         Task<ResponseResult> RemoverItemCarrinhoAsync(Guid produtoId);
         Task<ResponseResult> AplicarvoucherCarrinhoAsync(string voucher);
-        PedidoTransacaoViewModel MapearParaPedido(CarrinhoViewModel carrinho, EnderecoViewModel endereco);
+        #endregion
+
+        #region Pedido
+
+        PedidoTransacaoViewModel MapearParaPedido(CarrinhoViewModel carrinho, EnderecoViewModel? endereco);
+        ValueTask<ResponseResult> FinalizarPedidoAsync(PedidoTransacaoViewModel pedidoTransacao);
+        ValueTask<PedidoViewModel> ObterUltimoPedidoAsync();
+        ValueTask<IEnumerable<PedidoViewModel>> ObterListaPorClienteIdAsync();
+
+        #endregion
     }
+
     public class ComprasBffService : Service, IComprasBffService
     {
         #region Carrinho
@@ -65,7 +76,9 @@ namespace NSE.WebApp.MVC.Services
 
         #endregion
 
-        public PedidoTransacaoViewModel MapearParaPedido(CarrinhoViewModel carrinho, EnderecoViewModel endereco)
+        #region Pedido
+
+        public PedidoTransacaoViewModel MapearParaPedido(CarrinhoViewModel carrinho, EnderecoViewModel? endereco)
         {
             var pedido = new PedidoTransacaoViewModel
             {
@@ -73,12 +86,39 @@ namespace NSE.WebApp.MVC.Services
                 Itens = carrinho.Itens,
                 Desconto = carrinho.Desconto,
                 VoucherUtilizado = carrinho.VoucherUtilizado,
-                VoucherCodigo = carrinho.Voucher?.Codigo
+                VoucherCodigo = carrinho.Voucher?.Codigo,
+                Endereco = endereco
             };
-
-            pedido.Endereco = endereco;
 
             return pedido;
         }
+
+        public async ValueTask<ResponseResult> FinalizarPedidoAsync(PedidoTransacaoViewModel pedidoTransacao)
+        {
+
+            var response = await _httpClient.PostAsJsonAsync("pedido/", pedidoTransacao);
+
+            return await TratarErrosResponseERetornarResponseResultAsync(response);
+        }
+
+        public async ValueTask<PedidoViewModel> ObterUltimoPedidoAsync()
+        {
+            var response = await _httpClient.GetAsync("pedido/ultimo/");
+
+            TratarErrosResponse(response);
+
+            return await DeserializeObjectResponseAsync<PedidoViewModel>(response);
+        }
+
+        public async ValueTask<IEnumerable<PedidoViewModel>> ObterListaPorClienteIdAsync()
+        {
+            var response = await _httpClient.GetAsync("pedido/lista-cliente/");
+
+            TratarErrosResponse(response);
+
+            return await DeserializeObjectResponseAsync<IEnumerable<PedidoViewModel>>(response);
+        }
+
+        #endregion
     }
 }

@@ -36,7 +36,7 @@ namespace NSE.Clientes.API.Application.Commands
         {
             if(!request.IsValid()) return request.ValidationResult;
 
-            var endereco = new Endereco(request.Logradouro, request.Numero, request.Complemento, request.Bairro, request.Cep, request.Cidade, request.Estado);
+            var endereco = new Endereco(request.Logradouro, request.Numero, request.Complemento, request.Bairro, request.Cep, request.Cidade, request.Estado,request.ClienteId);
             await _clienteRepository.AddAsync(endereco);
 
             return await CommitAsync(_clienteRepository.UnitOfWork);

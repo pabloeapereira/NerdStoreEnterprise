@@ -6,7 +6,7 @@ namespace NSE.Catalogo.API.Models
     {
         Task<IEnumerable<Produto>> GetAllAsync();
         ValueTask<Produto?>GetByIdAsync(Guid id);
-
+        Task<List<Produto>> GetProductsById(string ids);
         void Add(Produto produto);
         void Update(Produto produto);
     }

@@ -95,6 +95,6 @@
     <script asp-append-version="true" src="~/js/script.js" type="text/javascript"></script>
     <script asp-append-version="true" src="~/js/site.js" type="text/javascript"></script>
 
-    @RenderSection("Scripts", required: false)
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

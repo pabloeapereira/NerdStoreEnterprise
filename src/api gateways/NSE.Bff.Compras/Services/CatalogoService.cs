@@ -16,10 +16,18 @@ namespace NSE.Bff.Compras.Services
             var response = await _httpClient.GetAsync($"catalogo/produtos/{id}");
             return TratarErrosResponse(response) ? await DeserializeObjectResponseAsync<ItemProdutoDTO>(response) : default;
         }
+
+        public async ValueTask<IEnumerable<ItemProdutoDTO>> GetItemsAsync(IEnumerable<Guid> ids)
+        {
+            var response = await _httpClient.GetAsync($"/catalogo/produtos/lista/{string.Join(",", ids)}/");
+
+            return TratarErrosResponse(response) ? await DeserializeObjectResponseAsync<IEnumerable<ItemProdutoDTO>>(response) : default;
+        }
     }
 
     public interface ICatalogoService 
     {
         Task<ItemProdutoDTO> GetByIdAsync(Guid id);
+        ValueTask<IEnumerable<ItemProdutoDTO>> GetItemsAsync(IEnumerable<Guid> ids);
     }
 }
