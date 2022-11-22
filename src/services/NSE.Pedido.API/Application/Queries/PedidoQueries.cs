@@ -23,14 +23,14 @@ namespace NSE.Pedido.API.Application.Queries
 
         public async Task<PedidoDTO?> GetUltimoPedidoAsync(Guid clienteId)
         {
-            const string sql = @"SELECT 
+            const string sql = @"SELECT TOP 1
                 P.ID AS ProdutoId, P.CODIGO, P.VOUCHERUTILIZADO, P.DESCONTO,P.VALORTOTAL, P.PEDIDOSTATUS,
                 P.LOGRADOURO, P.NUMERO, P.BAIRRO, P.CEP, P.COMPLEMENTO, P.CIDADE, P.ESTADO,
-                PIT.ID AS ProdutoItemId, PIT.PRODUTONOME, PIT.QUANTIDADE, PIT.PRODUTOIMAGEM, PIT.VALORNITARIO
+                PIT.ID AS ProdutoItemId, PIT.PRODUTONOME, PIT.QUANTIDADE, PIT.PRODUTOIMAGEM, PIT.ValorUnitario
                 FROM PEDIDOS P
-                INNER JOIN PEDIDOITEN PIT ON P.ID = PIT.PEDIDOID
+                INNER JOIN PEDIDOITENS PIT ON P.ID = PIT.PEDIDOID
                 WHERE P.CLIENTEID = @clienteId
-                AND P.DATACADASTRO between DATEADD(minute,-3,GETDATE()) AND DATEADD(minute,0,GETDATE())
+                AND P.DATACADASTRO between DATEADD(minute, -3,  GETDATE()) and DATEADD(minute, 0,  GETDATE())
                 AND P.PEDIDOSTATUS = 1
                 ORDER BY P.DATACADASTRO DESC";
 
@@ -44,6 +44,7 @@ namespace NSE.Pedido.API.Application.Queries
 
         private PedidoDTO MapearPedido(dynamic result)
         {
+            if (!((List<object>)result).Any()) return null;
             var pedido = new PedidoDTO
             {
                 Codigo = result[0].CODIGO,
@@ -68,7 +69,7 @@ namespace NSE.Pedido.API.Application.Queries
                 pedido.PedidoItens.Add(new ()
                 {
                     Nome = item.PRODUTONOME,
-                    ValorUnitario = item.VALORUNITARIO,
+                    Valor = item.VALORUNITARIO,
                     Quantidade = item.QUANTIDADE,
                     Imagem = item.PRODUTOIMAGEM
                 });

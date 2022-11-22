@@ -57,7 +57,7 @@ namespace NSE.Pedido.API.Application.Commands
             };
 
             var pedido = new Pedidos.Domain.Pedidos.Pedido(message.ClienteId, message.ValorTotal,
-                _mapper.Map<IList<PedidoItem>>(message.PedidoItens),
+                _mapper.Map<List<PedidoItem>>(message.PedidoItens),
                 message.VoucherUtilizado, message.Desconto);
 
             pedido.SetEndereco(endereco);

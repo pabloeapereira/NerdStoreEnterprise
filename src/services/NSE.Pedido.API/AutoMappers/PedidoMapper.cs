@@ -17,6 +17,7 @@ namespace NSE.Pedido.API.AutoMappers
             CreateMap<PedidoItem, PedidoItemDTO>()
                 .ForMember(d => d.Nome, o => o.MapFrom(s => s.ProdutoNome))
                 .ForMember(d => d.Imagem, o => o.MapFrom(s => s.ProdutoImagem))
+                .ForMember(d => d.Valor, o => o.MapFrom(s => s.ValorUnitario))
                 .ReverseMap();
 
             CreateMap<Endereco, EnderecoDTO>()

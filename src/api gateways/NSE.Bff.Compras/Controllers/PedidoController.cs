@@ -39,7 +39,8 @@ namespace NSE.Bff.Compras.Controllers
 
             PopularDadosPedido(carrinho, endereco, pedido);
 
-            return CustomResponse(await _pedidoService.FinalizarPedidoAsync(pedido));
+            var response = await _pedidoService.FinalizarPedidoAsync(pedido);
+            return CustomResponse(response);
         }
 
         [HttpGet("compras/pedido/ultimo")]
@@ -124,7 +125,7 @@ namespace NSE.Bff.Compras.Controllers
             pedido.VoucherUtilizado = carrinho.VoucherUtilizado;
             pedido.ValorTotal = carrinho.ValorTotal;
             pedido.Desconto = carrinho.Desconto;
-            pedido.PedidoItems = carrinho.Itens;
+            pedido.PedidoItens = carrinho.Itens;
 
             pedido.Endereco = endereco;
         }

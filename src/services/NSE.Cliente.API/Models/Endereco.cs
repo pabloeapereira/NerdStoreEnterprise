@@ -6,7 +6,7 @@ namespace NSE.Clientes.API.Models
     {
         public string Logradouro { get; }
         public string Numero { get; }
-        public string Complemento { get; }
+        public string? Complemento { get; }
         public string Bairro { get; }
         public string Cep { get; }
         public string Cidade { get; }
@@ -14,6 +14,7 @@ namespace NSE.Clientes.API.Models
         public Guid ClienteId { get; private set; }
         public Cliente Cliente { get; protected set; }
 
+        public Endereco(){}
         public Endereco(string logradouro, string numero, string complemento, string bairro, string cep, string cidade, string estado,Guid clientId)
         {
             Logradouro = logradouro;

@@ -11,7 +11,7 @@ namespace NSE.Pedido.API.Application.Commands
         //Pedido
         public Guid ClienteId { get; set; }
         public decimal ValorTotal { get; set; }
-        public IEnumerable<PedidoItemDTO> PedidoItens { get; set; }
+        public IEnumerable<PedidoItemDTO> PedidoItens { get; set; } = new List<PedidoItemDTO>();
 
         //Voucher
         public decimal Desconto { get; set; }

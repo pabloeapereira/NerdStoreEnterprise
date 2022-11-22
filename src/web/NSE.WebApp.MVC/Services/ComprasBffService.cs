@@ -82,7 +82,7 @@ namespace NSE.WebApp.MVC.Services
         {
             var pedido = new PedidoTransacaoViewModel
             {
-                Pedido = carrinho.ValorTotal,
+                ValorTotal = carrinho.ValorTotal,
                 Itens = carrinho.Itens,
                 Desconto = carrinho.Desconto,
                 VoucherUtilizado = carrinho.VoucherUtilizado,

@@ -6,11 +6,13 @@ namespace NSE.WebApp.MVC.Models
 {
     public class PedidoTransacaoViewModel
     {
-        public decimal Pedido { get; set; }
+        #region Pedido
+        public decimal ValorTotal { get; set; }
         public decimal Desconto { get; set; }
-        public bool VoucherUtilizado { get; set; }
         public string? VoucherCodigo { get; set; }
-        public IEnumerable<ItemCarrinhoViewModel> Itens { get; set; }
+        public bool VoucherUtilizado { get; set; }
+        public IEnumerable<ItemCarrinhoViewModel> Itens { get; set; } = new List<ItemCarrinhoViewModel>();
+        #endregion
 
         #region Endereço
         public EnderecoViewModel? Endereco { get; set; }

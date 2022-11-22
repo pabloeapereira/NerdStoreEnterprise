@@ -5,7 +5,7 @@ namespace NSE.Pedidos.Domain.Pedidos
 {
     public class Pedido : Entity, IAggregateRoot
     {
-        public Pedido(Guid clienteId, decimal valorTotal, IList<PedidoItem> pedidoItens,bool voucherUtilizado = false, decimal desconto = decimal.Zero,  
+        public Pedido(Guid clienteId, decimal valorTotal, List<PedidoItem> pedidoItens,bool voucherUtilizado = false, decimal desconto = decimal.Zero,  
             Guid? voucherId = null )
         {
             ClienteId = clienteId;
@@ -13,6 +13,8 @@ namespace NSE.Pedidos.Domain.Pedidos
             VoucherUtilizado = voucherUtilizado;
             Desconto = desconto;
             ValorTotal = valorTotal;
+            _pedidoItens = pedidoItens;
+            PedidoStatus = PedidoStatus.Autorizado;
         }
 
         public Pedido(){}

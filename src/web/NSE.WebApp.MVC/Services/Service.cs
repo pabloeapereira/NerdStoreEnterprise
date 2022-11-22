@@ -24,8 +24,8 @@ namespace NSE.WebApp.MVC.Services
         protected StringContent GetContent(object content) =>
             new(JsonSerializer.Serialize(content), Encoding.UTF8, "application/json");
 
-        protected async Task<T> DeserializeObjectResponseAsync<T>(HttpResponseMessage responseMessage) =>
-            await JsonSerializer.DeserializeAsync<T>(await responseMessage.Content.ReadAsStreamAsync(), JsonOptions);
+        protected async Task<T> DeserializeObjectResponseAsync<T>(HttpResponseMessage responseMessage, CancellationToken cancellationToken = default) =>
+            await responseMessage.Content.ReadFromJsonAsync<T>(JsonOptions, cancellationToken);
 
         protected bool TratarErrosResponse(HttpResponseMessage response)
         {
@@ -46,6 +46,7 @@ namespace NSE.WebApp.MVC.Services
 
         protected async Task<ResponseResult> TratarErrosResponseERetornarResponseResultAsync(HttpResponseMessage? response)
         {
+            var jsonResponse = await response.Content.ReadAsStringAsync();
             if (!TratarErrosResponse(response)) return await DeserializeObjectResponseAsync<ResponseResult>(response);
             return new ResponseResult();
         }

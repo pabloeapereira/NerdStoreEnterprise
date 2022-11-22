@@ -33,6 +33,7 @@ namespace NSE.Bff.Compras.Services
 
         protected async Task<ResponseResult> TratarErrosResponseERetornarResponseResultAsync(HttpResponseMessage? response)
         {
+            var jsonResponse = await response.Content.ReadAsStringAsync();
             if (!TratarErrosResponse(response)) return await DeserializeObjectResponseAsync<ResponseResult>(response);
             return new ResponseResult();
         }

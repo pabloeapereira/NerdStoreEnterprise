@@ -22,6 +22,8 @@ namespace NSE.Pedidos.Domain.Pedidos
             ProdutoImagem = produtoImagem;
         }
 
+        public PedidoItem(){}
+
         internal decimal CalcularValor() => Quantidade * ValorUnitario;
     }
 }

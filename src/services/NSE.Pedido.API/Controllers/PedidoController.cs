@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 using NSE.Core.Mediator;
 using NSE.Pedido.API.Application.Commands;
 using NSE.Pedido.API.Application.Queries;

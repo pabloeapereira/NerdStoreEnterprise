@@ -22,7 +22,7 @@ namespace NSE.Bff.Compras.Models
         public string VoucherCodigo { get; set; }
         public bool VoucherUtilizado { get; set; }
 
-        public IEnumerable<ItemCarrinhoDTO> PedidoItems { get; set; }
+        public IEnumerable<ItemCarrinhoDTO> PedidoItens { get; set; }
 
         #endregion
 

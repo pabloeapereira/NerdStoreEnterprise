@@ -28,6 +28,17 @@ namespace NSE.WebApp.MVC.Controllers
             return View(pedido);
         }
 
+        [HttpGet("pagamento")]
+        public async Task<IActionResult> Pagamento()
+        {
+            var carrinho = await _comprasBffService.GetCarrinhoAsync();
+            if (carrinho.Itens.Count == 0) return RedirectToAction("Index", "Carrinho");
+
+            var pedido = _comprasBffService.MapearParaPedido(carrinho, null);
+
+            return View(pedido);
+        }
+
         [HttpPost("finalizar-pedido")]
         public async Task<IActionResult> FinalizarPedido(PedidoTransacaoViewModel pedidoTransacao)
         {
