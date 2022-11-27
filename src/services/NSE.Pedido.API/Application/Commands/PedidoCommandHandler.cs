@@ -2,6 +2,8 @@
 using FluentValidation.Results;
 using MediatR;
 using NSE.Core.Messages;
+using NSE.Core.Messages.Integration;
+using NSE.MessageBus;
 using NSE.Pedido.API.Application.Events;
 using NSE.Pedidos.Domain.Pedidos;
 using NSE.Pedidos.Domain.Vouchers;
@@ -14,12 +16,14 @@ namespace NSE.Pedido.API.Application.Commands
         private readonly IMapper _mapper;
         private readonly IVoucherRepository _voucherRepository;
         private readonly IPedidoRepository _pedidoRepository;
+        private readonly IMessageBus _bus;
 
-        public PedidoCommandHandler(IMapper mapper, IVoucherRepository voucherRepository, IPedidoRepository pedidoRepository)
+        public PedidoCommandHandler(IMapper mapper, IVoucherRepository voucherRepository, IPedidoRepository pedidoRepository, IMessageBus bus)
         {
             _mapper = mapper;
             _voucherRepository = voucherRepository;
             _pedidoRepository = pedidoRepository;
+            _bus = bus;
         }
 
         public async Task<ValidationResult> Handle(AdicionarPedidoCommand message, CancellationToken cancellationToken)
@@ -32,7 +36,7 @@ namespace NSE.Pedido.API.Application.Commands
 
             if (!ValidarPedido(pedido)) return ValidationResult;
 
-            if (!ProcessarPagamento(pedido)) return ValidationResult;
+            if (!await ProcessarPagamentoAsync(pedido,message)) return ValidationResult;
 
             pedido.AutorizarPedido();
 
@@ -113,6 +117,16 @@ namespace NSE.Pedido.API.Application.Commands
             return true;
         }
 
-        public bool ProcessarPagamento(Pedidos.Domain.Pedidos.Pedido Pedido) => true;
+        public async Task<bool> ProcessarPagamentoAsync(Pedidos.Domain.Pedidos.Pedido pedido, AdicionarPedidoCommand message)
+        {
+            var pedidoIniciado = new PedidoIniciadoIntegrationEvent(pedido.ClienteId, pedido.Id, pedido.ValorTotal,
+                    message.NomeCartao, message.NumeroCartao, message.ExpiracaoCartao, message.CvvCartao);
+
+            var result = await _bus.RequestAsync<PedidoIniciadoIntegrationEvent, ResponseMessage>(pedidoIniciado);
+
+            AddErrors(result.ValidationResult);
+
+            return result.ValidationResult.IsValid;
+        }
     }
 }

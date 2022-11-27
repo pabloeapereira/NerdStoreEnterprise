@@ -62,9 +62,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compras", "Compras", "{38FD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSE.Bff.Compras", "src\api gateways\NSE.Bff.Compras\NSE.Bff.Compras.csproj", "{139F796D-E200-43C1-BBEC-C3FB80CB3AB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSE.Pedidos.Domain", "src\services\NSE.Pedidos.Domain\NSE.Pedidos.Domain.csproj", "{6D4C7E38-8EC0-4577-8DF2-DE467AF85DB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSE.Pedidos.Domain", "src\services\NSE.Pedidos.Domain\NSE.Pedidos.Domain.csproj", "{6D4C7E38-8EC0-4577-8DF2-DE467AF85DB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSE.Pedidos.Infra", "src\services\NSE.Pedidos.Infra\NSE.Pedidos.Infra.csproj", "{6F251DAD-A956-4BDF-ADD6-2958A7CAEE00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSE.Pedidos.Infra", "src\services\NSE.Pedidos.Infra\NSE.Pedidos.Infra.csproj", "{6F251DAD-A956-4BDF-ADD6-2958A7CAEE00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSE.Pagamentos.NerdsPag", "src\services\NSE.Pagamentos.NerdsPag\NSE.Pagamentos.NerdsPag.csproj", "{B6C98F19-6E5A-4098-907B-92FBA503BC1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -124,6 +126,10 @@ Global
 		{6F251DAD-A956-4BDF-ADD6-2958A7CAEE00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F251DAD-A956-4BDF-ADD6-2958A7CAEE00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F251DAD-A956-4BDF-ADD6-2958A7CAEE00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6C98F19-6E5A-4098-907B-92FBA503BC1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6C98F19-6E5A-4098-907B-92FBA503BC1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6C98F19-6E5A-4098-907B-92FBA503BC1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6C98F19-6E5A-4098-907B-92FBA503BC1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -157,6 +163,7 @@ Global
 		{139F796D-E200-43C1-BBEC-C3FB80CB3AB8} = {38FDE01C-D805-4F33-A02F-B1C67F47EB29}
 		{6D4C7E38-8EC0-4577-8DF2-DE467AF85DB9} = {89991322-206C-4F33-BE6B-2B89BA9C615B}
 		{6F251DAD-A956-4BDF-ADD6-2958A7CAEE00} = {89991322-206C-4F33-BE6B-2B89BA9C615B}
+		{B6C98F19-6E5A-4098-907B-92FBA503BC1B} = {C49016C3-2761-423B-A56F-30EDD45C1C2C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {46CBA870-DEAD-47F8-93F9-7DD61C86C9AB}
