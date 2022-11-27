@@ -1,17 +1,20 @@
-﻿using NSE.WebAPI.Core.Identidade;
+﻿using Microsoft.EntityFrameworkCore;
+using NSE.Pagamentos.API.Data;
+using NSE.WebAPI.Core.Identidade;
+using System.Diagnostics;
 
-namespace NSE.Pagamento.API.Configuration
+namespace NSE.Pagamentos.API.Configuration
 {
     public static class ApiConfig
     {
         public static IServiceCollection AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            /*services.AddDbContext<PedidosContext>(options =>
+            services.AddDbContext<PagamentosContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
                 if (Debugger.IsAttached)
                     options.EnableSensitiveDataLogging();
-            });*/
+            });
 
             //services.AddAutoMapper(typeof(VoucherMapper).Assembly);
 

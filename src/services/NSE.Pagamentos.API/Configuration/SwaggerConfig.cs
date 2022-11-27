@@ -1,6 +1,6 @@
 ﻿using Microsoft.OpenApi.Models;
 
-namespace NSE.Pagamento.API.Configuration
+namespace NSE.Pagamentos.API.Configuration
 {
     public static class SwaggerConfig
     {
