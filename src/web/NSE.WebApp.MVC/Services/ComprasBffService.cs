@@ -107,6 +107,8 @@ namespace NSE.WebApp.MVC.Services
 
             TratarErrosResponse(response);
 
+            var stringRespnse = await response.Content.ReadAsStringAsync();
+
             return await DeserializeObjectResponseAsync<PedidoViewModel>(response);
         }
 

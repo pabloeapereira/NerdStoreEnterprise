@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NSE.Pagamentos.API.Data;
+using NSE.Pagamentos.API.Facede;
 using NSE.WebAPI.Core.Identidade;
 using System.Diagnostics;
 
@@ -19,6 +20,8 @@ namespace NSE.Pagamentos.API.Configuration
             //services.AddAutoMapper(typeof(VoucherMapper).Assembly);
 
             services.AddControllers();
+
+            services.Configure<PagamentoConfig>(configuration.GetSection("PagamentoConfig"));
 
             services.AddCors(options =>
             {
